@@ -66,3 +66,11 @@ public class Persona {
     public void setSueldo(double sueldo){
         this.sueldo = sueldo;
     }
+
+    @Override
+    public String toString(){
+        return "Nombre: " + nombre + ", Apellido: " + apellido + ", Genero: " + genero +
+                ", Cargo: " + cargo + ", Edad: " + edad + ", Horas: " + hora +
+                ", Sueldo: " + sueldo;
+    }
+}

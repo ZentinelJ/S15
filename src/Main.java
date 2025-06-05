@@ -35,3 +35,27 @@ public class Main{
             }
             System.out.println("-------------------------");
         }
+
+        System.out.println("---- Procesando datos con lambdas y stremas, por favor espere... ----");
+
+        /*a. Calcule la cantidad de personas que hay almacenadas*/
+        long cantidadPersonas = personas.stream().count();
+        System.out.println("Cantidad de personas almacendas: " + cantidadPersonas);
+
+        /*b. Calcule el promedio edades de personas (average)*/
+        OptionalDouble promedioPersonas = personas.stream().mapToInt(Persona::getEdad).average();
+        System.out.println("Promedio de edades de las personas: " + promedioPersonas);
+
+        /*c. Muestre la cantidad de personas mayores de edad*/
+        long mayoresEdad = personas.stream().filter(p -> p.getEdad() >= 18).count();
+        System.out.println("Cantidad de personas mayores de edad: " + mayoresEdad);
+
+        /*d. Muestre las personas cuyos nombres empiecen con “A” (usa startWith de String)*/
+        long cantidadConA = personas.stream().filter(p -> p.getNombre().startsWith("A")).count();
+        System.out.println("Cantidad de personas que empiezan con A: " + cantidadConA);
+
+        /*e. Muestre las personas cuyos apellidos contengan (contains de String) la letra “M”*/
+        long cantidadConMEnApellido = personas.stream().filter(p -> p.getApellido().toUpperCase().contains("M")).count();
+        System.out.println("Cantidad de personas con letra 'M' en apellido: " + cantidadConMEnApellido);
+
+        System.out.println("---- Datos procesados exitosamente ----");

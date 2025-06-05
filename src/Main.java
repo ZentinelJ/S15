@@ -91,5 +91,6 @@ public class Main{
         personas.stream().filter(p -> p.getGenero().equalsIgnoreCase("Femenino") || p.getGenero().equalsIgnoreCase("F")).sorted(Comparator.comparing(Persona::getNombre)).forEach(p -> System.out.println("- " + p.getNombre() + " " + p.getApellido() + " (Edad: " + p.getEdad() + ", Cargo: " + p.getCargo() + ")"));
 
         sc.close();
+        System.out.println("---- Programa finalizado exitosamente. ----");
     }
 }

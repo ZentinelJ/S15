@@ -59,3 +59,37 @@ public class Main{
         System.out.println("Cantidad de personas con letra 'M' en apellido: " + cantidadConMEnApellido);
 
         System.out.println("---- Datos procesados exitosamente ----");
+
+        System.out.println("---- Realizando operaciones avanzadas con lambdas y streams, por favor espere... ----");
+
+        /*a. Sueldo de 8 horas de cada persona con cargo de director de género masculino (M)*/
+        System.out.println("Sueldo de 8 horas para directores masculinos: ");
+        personas.stream().filter(p -> p.getCargo().equalsIgnoreCase("Director")).filter(p -> p.getGenero().equalsIgnoreCase("Masculino") || p.getGenero().equalsIgnoreCase("M")).peek(p -> System.out.print("Nombre: " + p.getNombre() + " " + p.getApellido() + " ")) // Extra: peek
+                .mapToDouble(p -> p.getSueldo() * 8).forEach(sueldo -> System.out.println("Sueldo por 8 horas: $" + String.format("%.2f", sueldo)));
+
+        /*b. Primera persona que sea “desarrollador” y sea de género femenino*/
+        System.out.println("Primera persona desarrolladora femenina: ");
+        Optional<Persona> primeraDesarrolladoraFemenina = personas.stream().filter(p -> p.getCargo().equalsIgnoreCase("Desarrollador")).filter(p -> p.getGenero().equalsIgnoreCase("Femenino") || p.getGenero().equalsIgnoreCase("F")).findFirst();
+
+        primeraDesarrolladoraFemenina.ifPresentOrElse(p -> System.out.println("- " + p.getNombre() + " " + p.getApellido() + " (Cargo: " + p.getCargo() + ", Género: " + p.getGenero() + ")"), () -> System.out.println("No se encontró ninguna desarrolladora femenina."));
+
+        /*c. Persona con cargo de desarrollador que más gana por hora*/
+        System.out.println("Desarrollador que más gana por hora: ");
+        Optional<Persona> masGana = personas.stream().filter(p -> p.getCargo().equalsIgnoreCase("Desarrollador")).max(Comparator.comparingDouble(Persona::getSueldo)); // Asume getSueldo() es sueldo por hora
+
+        if (masGana.isPresent()) {
+            Persona desarrolladorMasGana = masGana.get();
+            System.out.println("Nombre: " + desarrolladorMasGana.getNombre() + " " + desarrolladorMasGana.getApellido());
+            System.out.println("Cargo: " + desarrolladorMasGana.getCargo());
+            System.out.println("Sueldo por hora: $" + String.format("%.2f", desarrolladorMasGana.getSueldo()));
+        } else {
+            System.out.println("No se encontró ningún desarrollador o no hay datos para comparar.");
+        }
+
+        /*d. Todas las mujeres ordenadas por su nombre*/
+        System.out.println("Mujeres ordenadas por nombre: ");
+        personas.stream().filter(p -> p.getGenero().equalsIgnoreCase("Femenino") || p.getGenero().equalsIgnoreCase("F")).sorted(Comparator.comparing(Persona::getNombre)).forEach(p -> System.out.println("- " + p.getNombre() + " " + p.getApellido() + " (Edad: " + p.getEdad() + ", Cargo: " + p.getCargo() + ")"));
+
+        sc.close();
+    }
+}
